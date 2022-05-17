@@ -45,8 +45,10 @@ void MainWindow::initConnect()
 
 void MainWindow::slotStartCaptureData()
 {
+    // 获取用户选择的列表。
     QString s = SelectNetDevDialog::getSelectDevName();
-    m_ptrNetUtil->NetDevNameList();
+    // 开始抓取数据。
+    m_ptrNetUtil->StartCaptureData(s);
     m_ptrActionToolBarStart->setEnabled(false);
     m_ptrActionToolBarStop->setEnabled(true);
     if (nullptr != m_ptrNetUtil) {

@@ -23,6 +23,11 @@ int NetUtil::StopCaptureData()
 
 int NetUtil::StartCaptureData(QString strDevName)
 {
+    if(strDevName.isNull() || strDevName.isEmpty()){
+        qWarning()<<"为选中网卡";
+        return -1;
+    }
+
     if (m_bStatus) {
         m_bStatus = false;
     }
