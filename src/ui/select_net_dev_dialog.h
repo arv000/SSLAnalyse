@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QComboBox>
 #include <QGridLayout>
+#include <QLabel>
 class SelectNetDevDialog : public QDialog {
     Q_OBJECT
    public:
@@ -14,6 +15,7 @@ class SelectNetDevDialog : public QDialog {
     void initConnect();
 
    private:
+    QLabel *m_ptrLabSelectDevName;
     QPushButton *m_ptrBtnRejected;
     QPushButton *m_ptrBtnAccepted;
     QGridLayout *m_ptrLayoutMain;

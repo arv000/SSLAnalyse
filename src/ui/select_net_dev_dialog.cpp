@@ -4,6 +4,7 @@
 #include <QtDebug>
 SelectNetDevDialog::SelectNetDevDialog(QWidget *parent)
     : QDialog(parent)
+    , m_ptrLabSelectDevName(new QLabel(tr("please select device:")))
     , m_ptrBtnRejected(new QPushButton(tr("cansl"), this))
     , m_ptrBtnAccepted(new QPushButton(tr("ok"), this))
     , m_ptrLayoutMain(new QGridLayout)
@@ -17,7 +18,8 @@ void SelectNetDevDialog::initUI()
 {
     setWindowTitle(tr("select device dialog"));
     setMinimumWidth(500);
-    m_ptrLayoutMain->addWidget(m_ptrCmbSelectDevName, 0, 0);
+    m_ptrLayoutMain->addWidget(m_ptrLabSelectDevName, 0, 0);
+    m_ptrLayoutMain->addWidget(m_ptrCmbSelectDevName, 0, 1);
     m_ptrLayoutMain->addWidget(m_ptrBtnRejected, 1, 0);
     m_ptrLayoutMain->addWidget(m_ptrBtnAccepted, 1, 1);
     NetUtil netUtil;

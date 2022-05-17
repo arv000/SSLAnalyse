@@ -10,12 +10,19 @@ class NetUtil : public QObject {
     /**
      * @brief 开始抓取数据
      */
-    void StartCaptureData();
+    int StartCaptureData();
     /**
      * @brief 停止抓取
      */
-    void StopCaptureData();
-
+    int StopCaptureData();
+    /**
+     * @brief 开始抓取数据
+     */
+    int StartCaptureData(QString strDevName);
+    /**
+     * @brief 停止抓取
+     */
+    int StopCaptureData(QString strDevName);
     /**
      * @brief 获取网络设备列表
      * @return

@@ -7,9 +7,35 @@ NetUtil::NetUtil(QObject *parent)
 {
 }
 
-void NetUtil::StartCaptureData() {}
+int NetUtil::StartCaptureData()
+{
+    QString strDevName;
+    StartCaptureData(strDevName);
+    return 0;
+}
 
-void NetUtil::StopCaptureData() {}
+int NetUtil::StopCaptureData()
+{
+    QString strDevName;
+    StopCaptureData(strDevName);
+    return 0;
+}
+
+int NetUtil::StartCaptureData(QString strDevName)
+{
+    if (m_bStatus) {
+        m_bStatus = false;
+    }
+    return 0;
+}
+
+int NetUtil::StopCaptureData(QString strDevName)
+{
+    if (m_bStatus) {
+        m_bStatus = true;
+    }
+    return 0;
+}
 
 QStringList NetUtil::NetDevNameList()
 {

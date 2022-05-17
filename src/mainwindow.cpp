@@ -46,8 +46,6 @@ void MainWindow::initConnect()
 void MainWindow::slotStartCaptureData()
 {
     QString s = SelectNetDevDialog::getSelectDevName();
-    qInfo() << s;
-    return;
     m_ptrNetUtil->NetDevNameList();
     m_ptrActionToolBarStart->setEnabled(false);
     m_ptrActionToolBarStop->setEnabled(true);
