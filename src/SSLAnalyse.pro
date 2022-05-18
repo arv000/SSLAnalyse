@@ -30,14 +30,17 @@ SOURCES += \
         net/net_util.cpp \
         net/analyze_ssl_util.cpp \
         net/analyze_http_util.cpp \
-    ui/select_net_dev_dialog.cpp
+    ui/select_net_dev_dialog.cpp \
+    net/net_util_thread.cpp
 
 HEADERS += \
         mainwindow.h \
         net/net_util.h \
         net/analyze_ssl_util.h \
         net/analyze_http_util.h \
-    ui/select_net_dev_dialog.h
+    ui/select_net_dev_dialog.h \
+    net/net_util_thread.h \
+     net/net_common.h
 
 
 # Default rules for deployment.
