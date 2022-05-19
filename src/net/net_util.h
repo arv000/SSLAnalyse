@@ -32,6 +32,8 @@ class NetUtil : public QObject {
     bool m_bStatus;
     pcap_t *_pcap;
     NetUtilThread thread;
+    struct bpf_program filter;
+    bpf_u_int32 mask = 0;
    signals:
 
    public slots:

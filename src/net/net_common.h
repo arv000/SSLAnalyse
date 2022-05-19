@@ -1,7 +1,17 @@
 #ifndef NET_COMMON_H
 #define NET_COMMON_H
 #include "pcap.h"
+#include <QtDebug>
+
 #define ETHER_ADDR_LEN 6
+
+#define MAX_HOST_LEN 65535
+#define MAX_GET_LEN 2048
+#define URL_MAX_LEN 2048
+#define get_u_int8_t(X, O) (*(uint8_t *)(((uint8_t *)X) + O))
+#define get_u_int16_t(X, O) (*(uint16_t *)(((uint8_t *)X) + O))
+#define get_u_int32_t(X, O) (*(uint32_t *)(((uint8_t *)X) + O))
+#define get_u_int64_t(X, O) (*(uint64_t *)(((uint8_t *)X) + O))
 struct sniff_ethernet {
     u_char ether_dhost[ETHER_ADDR_LEN]; /* ⽬的主机的地址         | 6 */
     u_char ether_shost[ETHER_ADDR_LEN]; /* 源主机的地址           | 6 */
@@ -11,17 +21,17 @@ struct sniff_ip {
     u_char ip_vhl;  /* 前4位版本,后四位首部长度   | 1 */
     u_char ip_tos;  /* 服务类型(TOS)            | 1 */
     u_short ip_len; /* 总长度(字节数)            | 2 */
-    u_short ip_id;  /* 标识                     | 2 */
+    u_short ip_id;  /* 标识,Identification在一次数据传输中其实连续的 | 2 */
     u_short ip_off; /* 前3位标志,后13位偏移       | 2 */
 #define IP_RF 0x8000
 #define IP_DF 0x4000
 #define IP_MF 0x2000
 #define IP_OFFMASK 0x1fff
-    u_char ip_ttl;         /* 生成时间(TTL)     | 1 */
-    u_char ip_p;           /* 协议             | 1 */
-    u_short ip_sum;        /* 16位首部校验      | 2 */
-    struct in_addr ip_src; /* 32位源ip地址      | 4 */
-    struct in_addr ip_dst; /* 32位目的IP地址    | 4  */
+    u_char ip_ttl;                 /* 生成时间(TTL)     | 1 */
+    u_char ip_p;                   /* 协议             | 1 */
+    u_short ip_sum;                /* 16位首部校验      | 2 */
+    struct in_addr ip_src, ip_dst; /* 32位源ip地址      | 4 */
+    //  /  struct in_addr ip_dst; /* 32位目的IP地址    | 4  */
 };
 
 typedef u_int tcp_seq;
@@ -38,6 +48,7 @@ struct sniff_tcp {
     u_short th_win;  //窗口大小 16 bit
     u_short th_sum;  //校验和 16 bit
     u_short th_urp;  //紧急数据偏移量 16 bit
+    u_char option[12];
 };
 
 struct sniff_udp {

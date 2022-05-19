@@ -1,11 +1,6 @@
 #include "net_util.h"
 
 #define CAP_LEN 2048
-static void on_handle_pkt(uint8_t *args, const struct pcap_pkthdr *ph,
-                          const uint8_t *sp)
-{
-    printf("Capture: %u, len: %u\n", ph->caplen, ph->len);
-}
 
 NetUtil::NetUtil(QObject *parent)
     : QObject(parent)
@@ -43,11 +38,26 @@ int NetUtil::StartCaptureData(QString strDevName)
     int cap_len = CAP_LEN;
     char ebuf[PCAP_ERRBUF_SIZE];
 
+
+    int ret = 0;
+    // 打开设备准备开始监听程序,需要使用root权限
     _pcap = pcap_open_live(strDevName.toStdString().c_str(), cap_len, dev_flag,
                            1000, ebuf);
+
     if (!_pcap) {
         qWarning() << "pcap_open_live:" << strDevName << "," << ebuf;
         return -1;
+    }
+
+    ret = pcap_compile(_pcap, &filter, "tcp", 0, mask);
+    if (-1 == ret) {
+        qWarning() << "pcap_compile failed:" << strDevName << "," << ebuf;
+        return -2;
+    }
+    ret = pcap_setfilter(_pcap, &filter);
+    if (-1 == ret) {
+        qWarning() << "pcap_setfilter failed:" << strDevName << "," << ebuf;
+        return -3;
     }
     thread.setPcap(_pcap);
     thread.start();

@@ -3,15 +3,14 @@
 
 #include <QObject>
 
-class AnalyzeHttpUtil : public QObject
-{
+class AnalyzeHttpUtil : public QObject {
     Q_OBJECT
-public:
+   public:
     explicit AnalyzeHttpUtil(QObject *parent = nullptr);
+    int parseHttpHead(const u_char *payload,const unsigned int payload_len);
+   signals:
 
-signals:
-
-public slots:
+   public slots:
 };
 
-#endif // ANALYZE_HTTP_UTIL_H
+#endif  // ANALYZE_HTTP_UTIL_H
