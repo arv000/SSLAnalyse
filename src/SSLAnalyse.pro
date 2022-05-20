@@ -32,7 +32,8 @@ SOURCES += \
         net/analyze_http_util.cpp \
     ui/select_net_dev_dialog.cpp \
     net/net_util_thread.cpp \
-    tool/log_tools.cpp
+    tool/log_tools.cpp \
+    net/analyze_util.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,7 +43,8 @@ HEADERS += \
     ui/select_net_dev_dialog.h \
     net/net_util_thread.h \
      net/net_common.h \
-    tool/log_tools.h
+    tool/log_tools.h \
+    net/analyze_util.h
 
 
 # Default rules for deployment.

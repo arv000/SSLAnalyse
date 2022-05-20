@@ -12,6 +12,16 @@
 #define get_u_int16_t(X, O) (*(uint16_t *)(((uint8_t *)X) + O))
 #define get_u_int32_t(X, O) (*(uint32_t *)(((uint8_t *)X) + O))
 #define get_u_int64_t(X, O) (*(uint64_t *)(((uint8_t *)X) + O))
+
+#define NET_FLAGS_SYN 0x02
+#define NET_FLAGS_ACK 0x10
+#define NET_FLAGS_FIN 0x01
+#define NET_FLAGS_PSH 0x80
+
+#define NET_FLAGS_SYN_ACK 0x12  // DEC 18
+#define NET_FLAGS_SYN_FIN 0x11  // DEC 17
+#define NET_FLAGS_PSH_ACK 0x18  // DEC 24
+
 struct sniff_ethernet {
     u_char ether_dhost[ETHER_ADDR_LEN]; /* ⽬的主机的地址         | 6 */
     u_char ether_shost[ETHER_ADDR_LEN]; /* 源主机的地址           | 6 */
@@ -21,8 +31,8 @@ struct sniff_ip {
     u_char ip_vhl;  /* 前4位版本,后四位首部长度   | 1 */
     u_char ip_tos;  /* 服务类型(TOS)            | 1 */
     u_short ip_len; /* 总长度(字节数)            | 2 */
-    u_short ip_id;  /* 标识,Identification在一次数据传输中其实连续的 | 2 */
-    u_short ip_off; /* 前3位标志,后13位偏移       | 2 */
+    u_short ip_id; /* 标识,Identification在一次数据传输中其实连续的     | 2 */
+    u_short ip_off;
 #define IP_RF 0x8000
 #define IP_DF 0x4000
 #define IP_MF 0x2000
@@ -40,15 +50,19 @@ struct sniff_tcp {
     u_short th_dport;  //目的端口号 16 bit
     tcp_seq th_seq;    //序列号 32 bit
     tcp_seq th_ack;    //确认号 32 bit
-
-    //    u_char th_offx2;  //前4位：TCP 头长度；中6位：保留；后6位：标志位
-    //    u_char th_flags;
-    u_short
-        m_sHeaderLenAndFlag;  //前4位：TCP 头长度；中6位：保留；后6位：标志位
+    u_char th_len;     // TCP 头部长度
+    /**
+     * 前3位标志,   | 2
+     * 0x001 FIN
+     * 0x002 SYN
+     * 0x004 Reset
+     * 0x010 ACK   */
+    u_char th_flags;  //前4位：TCP 头长度；中6位：保留；后6位：标志位
     u_short th_win;  //窗口大小 16 bit
     u_short th_sum;  //校验和 16 bit
     u_short th_urp;  //紧急数据偏移量 16 bit
-    u_char option[12];
+
+    //  u_char option[12]; 选择内容不一定会有.
 };
 
 struct sniff_udp {
